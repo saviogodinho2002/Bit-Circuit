@@ -2,6 +2,7 @@ package com.savio.bitcircuit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+
+import java.util.Timer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnStart = findViewById(R.id.btn_start);
+
         xor_1Comparion = findViewById(R.id.txt_xor_1);
         xor_2Comparion = findViewById(R.id.txt_xor_2);
         xor_1Output = findViewById(R.id.txt_result_xor_1);
@@ -76,43 +80,189 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 handler.removeCallbacksAndMessages(null);
                 delay = 0;
+                reset();
                 firstRotine();
             }
         });
 
     }
     private void reset(){
+        xor_1Comparion.setTextColor(Color.WHITE);
+        and_1Comparion.setTextColor(Color.WHITE);
+        xor_2Comparion.setTextColor(Color.WHITE);
+        and_2Comparion.setTextColor(Color.WHITE);
+        orComparion.setTextColor(Color.WHITE);
+
+        xor_1Comparion.setText("0 xor 0");
+        xor_2Comparion.setText("0 xor 0");
+        and_2Comparion.setText("0 and 0");
+        and_1Comparion.setText("0 and 0");
+        orComparion.setText("0 or 0");
+
+        xor_2Output.setText("0");
+        xor_1Output.setText("0");
+        and_2Output.setText("0");
+        and_1Output.setText("0");
+        orOutput.setText("0");
+
+        xor_1Output.setBackgroundColor(Color.BLACK);
+        and_1Output.setBackgroundColor(Color.BLACK);
+        xor_2Output.setBackgroundColor(Color.BLACK);
+        and_2Output.setBackgroundColor(Color.BLACK);
+        orOutput.setBackgroundColor(Color.BLACK);
+
+        carryOutPut.setBackgroundColor(Color.WHITE);
+        bitOutPut.setBackgroundColor(Color.WHITE);
+
+        carryOutPut.setText("0");
+        bitOutPut.setText("0");
+
+        /*
+         int delay = 0;   // delay de 2 seg.
+        int interval = 1000;  // intervalo de 1 seg.
+
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                public void run() {
+                    String texto =  binario;
+                    txtHistoric.setText(texto);
+                    timer.cancel();
+                    Log.e("teste",binario);
+                }
+            }, delay+=2000,0);
+            Log.e("teste",binario);
+        }
+        DELAYYY
+         */
 
     }
     private void firstRotine(){
-        xor_1Comparion.setText(bit_1 + " xor " + bit_2);
-        and_1Comparion.setText(bit_1 + " and " + bit_2);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                xor_1Comparion.setText(bit_1 + " xor " + bit_2);
+                and_1Comparion.setText(bit_1 + " and " + bit_2);
 
-        xor_1Output.setText(  (!bit_1.equals(bit_2 )) ?"1":"0");
-        and_1Output.setText((bit_1.equals(bit_2 ) && bit_2.equals("1")) ?"1":"0");
+                xor_1Comparion.setTextColor(Color.YELLOW);
+                and_1Comparion.setTextColor(Color.YELLOW);
+            }
+        },delay+=2000);
+
+
+        boolean bitOne = bit_1.equals(bit_2 );
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean finalBitOne =  bit_1.equals(bit_2 );
+
+                xor_1Comparion.setTextColor(!finalBitOne?
+                        Color.GREEN:Color.RED);
+                and_1Comparion.setTextColor(finalBitOne && bit_2.equals("1")?
+                        Color.GREEN:Color.RED);
+
+                xor_1Output.setText(  (!finalBitOne)?"1":"0");
+                and_1Output.setText((finalBitOne && bit_2.equals("1")) ?"1":"0");
+
+                xor_1Output.setBackgroundColor(!finalBitOne?
+                        Color.CYAN:
+                        Color.BLACK);
+                and_1Output.setBackgroundColor(finalBitOne && bit_2.equals("1")?
+                        Color.CYAN:
+                        Color.BLACK);
+            }
+        },delay+=2000);
+
 
         secondRotine();
     }
     private void secondRotine(){
-        xor_2Comparion.setText(carry + " xor " + xor_1Output.getText());
-        and_2Comparion.setText(carry + " and " + xor_1Output.getText());
 
-        xor_2Output.setText( (!carry.equals(xor_1Output.getText())   )?"1":"0");
-        and_2Output.setText( (carry.equals(xor_1Output.getText()) && carry.equals("1"))?"1":"0");
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                xor_2Comparion.setText(carry + " xor " + xor_1Output.getText());
+                and_2Comparion.setText(carry + " and " + xor_1Output.getText());
+
+                xor_2Comparion.setTextColor(Color.YELLOW);
+                and_2Comparion.setTextColor(Color.YELLOW);
+
+            }
+        },delay+=2000);
+        boolean bitOne = carry.equals(xor_1Output.getText());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean finalBitOne = carry.equals(xor_1Output.getText());
+
+                xor_2Comparion.setTextColor(!finalBitOne?
+                        Color.GREEN:Color.RED);
+                and_2Comparion.setTextColor(finalBitOne && carry.equals("1")?
+                        Color.GREEN:Color.RED);
+
+                xor_2Output.setText( (!finalBitOne)?"1":"0");
+                and_2Output.setText( (finalBitOne && carry.equals("1"))?"1":"0");
+
+                xor_2Output.setBackgroundColor(!finalBitOne?
+                        Color.CYAN:
+                        Color.BLACK);
+                and_2Output.setBackgroundColor(finalBitOne && carry.equals("1")?
+                        Color.CYAN:
+                        Color.BLACK);
+
+            }
+        },delay+=2000);
+
 
         ThirtRotine();
     }
     private void ThirtRotine(){
-        carryOutPut.setText(xor_2Output.getText());
-        orComparion.setText(and_2Output.getText() + " or " + and_1Output.getText());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                carryOutPut.setText(xor_2Output.getText());
+                orComparion.setText(and_2Output.getText() + " or " + and_1Output.getText());
 
-        orOutput.setText( (and_2Output.getText().equals("1") || and_1Output.getText().equals("1"))?"1":"0");
+                orComparion.setTextColor(Color.YELLOW);
+                carryOutPut.setBackgroundColor(carryOutPut.getText().equals("1")?
+                        Color.CYAN:
+                        Color.WHITE);
+            }
+        },delay+=2000);
+
+        boolean bitOne = (and_2Output.getText().equals("1") || and_1Output.getText().equals("1") );
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean finalBitOne = (and_2Output.getText().equals("1") || and_1Output.getText().equals("1") );
+
+                orComparion.setTextColor(finalBitOne?
+                        Color.GREEN:Color.RED);
+
+                orOutput.setText(finalBitOne?"1":"0");
+                orOutput.setBackgroundColor(finalBitOne?
+                        Color.CYAN:
+                        Color.BLACK);
+
+            }
+        },delay+=2000);
+
 
         quatroRotine();
 
     }
     private void quatroRotine(){
-        bitOutPut.setText(orOutput.getText());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bitOutPut.setText(orOutput.getText());
+                bitOutPut.setBackgroundColor(bitOutPut.getText().equals("1")?
+                        Color.CYAN:
+                        Color.WHITE);
+
+
+            }
+        },delay+=2000);
+
     }
 
 }
