@@ -10,9 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Timer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private String bit_1,bit_2,carry;
     private int delay;
     private Button btnStart;
+    private ImageView setaXor_1,setaXor_2,setaAnd_1,setaAnd_2,setaOr,setaCarry,setaSoma;
     private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
         chkBit_2 = findViewById(R.id.check_b);
         chkCarry = findViewById(R.id.check_carry_1);
 
+        setaAnd_1 = findViewById(R.id.img_seta_and_1);
+        setaAnd_2 = findViewById(R.id.img_seta_and_2);
+        setaXor_1 = findViewById(R.id.img_seta_xor_1);
+        setaXor_2 = findViewById(R.id.img_seta_xor_2);
+        setaOr = findViewById(R.id.img_seta_or);
+        setaCarry = findViewById(R.id.img_seta_carryout);
+        setaSoma = findViewById(R.id.img_seta_soma);
+        reset();
         bit_1 = "0";
         bit_2 = "0";
         carry = "0";
@@ -117,6 +125,13 @@ public class MainActivity extends AppCompatActivity {
         carryOutPut.setText("0");
         bitOutPut.setText("0");
 
+        setaSoma.setVisibility(View.INVISIBLE);
+        setaCarry.setVisibility(View.INVISIBLE);
+        setaOr.setVisibility(View.INVISIBLE);
+        setaXor_1.setVisibility(View.INVISIBLE);
+        setaXor_2.setVisibility(View.INVISIBLE);
+        setaAnd_1.setVisibility(View.INVISIBLE);
+        setaAnd_2.setVisibility(View.INVISIBLE);
         /*
          int delay = 0;   // delay de 2 seg.
         int interval = 1000;  // intervalo de 1 seg.
@@ -145,6 +160,10 @@ public class MainActivity extends AppCompatActivity {
 
                 xor_1Comparion.setTextColor(Color.YELLOW);
                 and_1Comparion.setTextColor(Color.YELLOW);
+
+                setaXor_1.setVisibility(View.VISIBLE);
+                setaAnd_1.setVisibility(View.VISIBLE);
+
             }
         },delay+=2000);
 
@@ -180,11 +199,16 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                setaXor_1.setVisibility(View.INVISIBLE);
+                setaAnd_1.setVisibility(View.INVISIBLE);
                 xor_2Comparion.setText(carry + " xor " + xor_1Output.getText());
                 and_2Comparion.setText(carry + " and " + xor_1Output.getText());
 
                 xor_2Comparion.setTextColor(Color.YELLOW);
                 and_2Comparion.setTextColor(Color.YELLOW);
+
+                setaXor_2.setVisibility(View.VISIBLE);
+                setaAnd_2.setVisibility(View.VISIBLE);
 
             }
         },delay+=2000);
@@ -219,6 +243,11 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                setaXor_2.setVisibility(View.INVISIBLE);
+                setaAnd_2.setVisibility(View.INVISIBLE);
+
+                setaSoma.setVisibility(View.VISIBLE);
+
                 carryOutPut.setText(xor_2Output.getText());
                 orComparion.setText(and_2Output.getText() + " or " + and_1Output.getText());
 
@@ -234,10 +263,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 boolean finalBitOne = (and_2Output.getText().equals("1") || and_1Output.getText().equals("1") );
-
+                setaSoma.setVisibility(View.INVISIBLE);
                 orComparion.setTextColor(finalBitOne?
                         Color.GREEN:Color.RED);
-
+                setaOr.setVisibility(View.VISIBLE);
                 orOutput.setText(finalBitOne?"1":"0");
                 orOutput.setBackgroundColor(finalBitOne?
                         Color.CYAN:
@@ -254,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                setaOr.setVisibility(View.INVISIBLE);
+                setaCarry.setVisibility(View.VISIBLE);
                 bitOutPut.setText(orOutput.getText());
                 bitOutPut.setBackgroundColor(bitOutPut.getText().equals("1")?
                         Color.CYAN:

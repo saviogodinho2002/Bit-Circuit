@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/circuit" />
+        app:srcCompat="@drawable/circuitnew" />
 
     <TextView
         android:id="@+id/txt_result_and_2"
@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.341" />
+        app:layout_constraintVertical_bias="0.389" />
 
     <TextView
         android:id="@+id/txt_result_or"
@@ -46,36 +46,34 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/txt_result_and_2"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.153" />
+        app:layout_constraintVertical_bias="0.195" />
 
     <TextView
         android:id="@+id/txt_bit"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_marginTop="28dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="0"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/txt_result_or"
-        app:layout_constraintStart_toStartOf="@+id/txt_result_or"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.017" />
+        app:layout_constraintEnd_toEndOf="@+id/txt_xor_2"
+        app:layout_constraintStart_toEndOf="@+id/txt_result_xor_2"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/txt_carry"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="0"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/txt_result_xor_2"
-        app:layout_constraintHorizontal_bias="0.227"
-        app:layout_constraintStart_toStartOf="@+id/txt_result_xor_2"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.017" />
+        app:layout_constraintEnd_toEndOf="@+id/txt_result_or"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/txt_and_2"
@@ -107,8 +105,8 @@
         android:id="@+id/txt_result_and_1"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="71dp"
-        android:layout_marginLeft="71dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
         android:background="@color/black"
         android:gravity="center"
         android:text="0"
@@ -116,7 +114,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/txt_result_xor_1"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.622" />
+        app:layout_constraintVertical_bias="0.672" />
 
     <TextView
         android:id="@+id/txt_xor_1"
@@ -157,14 +155,14 @@
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.623" />
+        app:layout_constraintVertical_bias="0.672" />
 
     <TextView
         android:id="@+id/txt_result_xor_2"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginEnd="71dp"
-        android:layout_marginRight="71dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginRight="72dp"
         android:background="@color/black"
         android:gravity="center"
         android:text="0"
@@ -172,7 +170,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/txt_result_and_2"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.341" />
+        app:layout_constraintVertical_bias="0.387" />
 
     <TextView
         android:id="@+id/txt_and_1"
@@ -189,14 +187,17 @@
 
     <CheckBox
         android:id="@+id/check_carry_1"
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="Carry in"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/txt_xor_1"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.955" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/check_a"
@@ -204,10 +205,14 @@
         android:layout_height="40dp"
         android:layout_marginEnd="80dp"
         android:layout_marginRight="80dp"
+        android:gravity="center"
+        android:text="A"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/txt_result_and_1"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.955" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/check_b"
@@ -215,21 +220,137 @@
         android:layout_height="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:text="B"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/txt_result_and_1"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.955" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
         android:text="Iniciar"
         android:textColor="@color/white"
         app:backgroundTint="#0521BA"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/check_b" />
+        app:layout_constraintTop_toTopOf="@+id/check_b" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Soma"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txt_carry"
+        app:layout_constraintEnd_toEndOf="@+id/txt_carry"
+        app:layout_constraintStart_toStartOf="@+id/txt_carry" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Carry Out"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txt_bit"
+        app:layout_constraintEnd_toEndOf="@+id/txt_bit"
+        app:layout_constraintStart_toStartOf="@+id/txt_bit" />
+
+    <ImageView
+        android:id="@+id/img_seta_xor_1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginBottom="16dp"
+        android:rotation="15"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_xor_1"
+        app:layout_constraintEnd_toStartOf="@+id/txt_result_xor_1"
+        app:srcCompat="@drawable/seta" />
+
+    <ImageView
+        android:id="@+id/img_seta_xor_2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginBottom="16dp"
+        android:rotation="15"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_xor_2"
+        app:layout_constraintEnd_toStartOf="@+id/txt_result_xor_2"
+        app:srcCompat="@drawable/seta" />
+
+    <ImageView
+        android:id="@+id/img_seta_carryout"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:rotation="15"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_bit"
+        app:layout_constraintEnd_toStartOf="@+id/txt_bit"
+        app:srcCompat="@drawable/seta" />
+
+    <ImageView
+        android:id="@+id/img_seta_and_2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginBottom="16dp"
+        android:rotation="15"
+        android:rotationY="-183"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_and_2"
+        app:layout_constraintStart_toEndOf="@+id/txt_result_and_2"
+        app:srcCompat="@drawable/seta" />
+
+    <ImageView
+        android:id="@+id/img_seta_soma"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:rotation="15"
+        android:rotationY="-183"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_carry"
+        app:layout_constraintStart_toEndOf="@+id/txt_carry"
+        app:srcCompat="@drawable/seta" />
+
+    <ImageView
+        android:id="@+id/img_seta_or"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginBottom="16dp"
+        android:rotation="15"
+        android:rotationY="-183"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_or"
+        app:layout_constraintStart_toEndOf="@+id/txt_result_or"
+        app:srcCompat="@drawable/seta" />
+
+    <ImageView
+        android:id="@+id/img_seta_and_1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginBottom="16dp"
+        android:rotation="15"
+        android:rotationY="-183"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_and_1"
+        app:layout_constraintStart_toEndOf="@+id/txt_result_and_1"
+        app:srcCompat="@drawable/seta" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
