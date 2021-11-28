@@ -113,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
         and_1Output.setText("0");
         orOutput.setText("0");
 
+        xor_2Output.setTextColor(Color.WHITE);
+        xor_1Output.setTextColor(Color.WHITE);
+        and_2Output.setTextColor(Color.WHITE);
+        and_1Output.setTextColor(Color.WHITE);
+        orOutput.setTextColor(Color.WHITE);
+
         xor_1Output.setBackgroundColor(Color.BLACK);
         and_1Output.setBackgroundColor(Color.BLACK);
         xor_2Output.setBackgroundColor(Color.BLACK);
@@ -178,10 +184,13 @@ public class MainActivity extends AppCompatActivity {
                         Color.GREEN:Color.RED);
                 and_1Comparion.setTextColor(finalBitOne && bit_2.equals("1")?
                         Color.GREEN:Color.RED);
-
+                //
                 xor_1Output.setText(  (!finalBitOne)?"1":"0");
                 and_1Output.setText((finalBitOne && bit_2.equals("1")) ?"1":"0");
 
+                xor_1Output.setTextColor(  (!finalBitOne)?Color.BLACK:Color.WHITE);
+                and_1Output.setTextColor((finalBitOne && bit_2.equals("1")) ?Color.BLACK: Color.WHITE);
+                //
                 xor_1Output.setBackgroundColor(!finalBitOne?
                         Color.CYAN:
                         Color.BLACK);
@@ -203,10 +212,12 @@ public class MainActivity extends AppCompatActivity {
                 setaAnd_1.setVisibility(View.INVISIBLE);
                 xor_2Comparion.setText(carry + " xor " + xor_1Output.getText());
                 and_2Comparion.setText(carry + " and " + xor_1Output.getText());
-
+                 //
                 xor_2Comparion.setTextColor(Color.YELLOW);
                 and_2Comparion.setTextColor(Color.YELLOW);
 
+
+                //
                 setaXor_2.setVisibility(View.VISIBLE);
                 setaAnd_2.setVisibility(View.VISIBLE);
 
@@ -222,10 +233,15 @@ public class MainActivity extends AppCompatActivity {
                         Color.GREEN:Color.RED);
                 and_2Comparion.setTextColor(finalBitOne && carry.equals("1")?
                         Color.GREEN:Color.RED);
-
+                //
                 xor_2Output.setText( (!finalBitOne)?"1":"0");
                 and_2Output.setText( (finalBitOne && carry.equals("1"))?"1":"0");
 
+                xor_2Output.setTextColor( (!finalBitOne)?Color.BLACK:Color.WHITE);
+                and_2Output.setTextColor( (finalBitOne && carry.equals("1"))?Color.BLACK:Color.WHITE);
+
+
+                //
                 xor_2Output.setBackgroundColor(!finalBitOne?
                         Color.CYAN:
                         Color.BLACK);
@@ -246,15 +262,17 @@ public class MainActivity extends AppCompatActivity {
                 setaXor_2.setVisibility(View.INVISIBLE);
                 setaAnd_2.setVisibility(View.INVISIBLE);
 
-                setaSoma.setVisibility(View.VISIBLE);
-
                 carryOutPut.setText(xor_2Output.getText());
                 orComparion.setText(and_2Output.getText() + " or " + and_1Output.getText());
 
                 orComparion.setTextColor(Color.YELLOW);
+                setaOr.setVisibility(View.VISIBLE);
                 carryOutPut.setBackgroundColor(carryOutPut.getText().equals("1")?
                         Color.CYAN:
                         Color.WHITE);
+                setaSoma.setVisibility(carryOutPut.getText().equals("1")?
+                        View.VISIBLE:
+                        View.INVISIBLE);
             }
         },delay+=2000);
 
@@ -266,8 +284,9 @@ public class MainActivity extends AppCompatActivity {
                 setaSoma.setVisibility(View.INVISIBLE);
                 orComparion.setTextColor(finalBitOne?
                         Color.GREEN:Color.RED);
-                setaOr.setVisibility(View.VISIBLE);
+
                 orOutput.setText(finalBitOne?"1":"0");
+                orOutput.setTextColor(finalBitOne?Color.BLACK:Color.WHITE);
                 orOutput.setBackgroundColor(finalBitOne?
                         Color.CYAN:
                         Color.BLACK);
@@ -283,12 +302,18 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                setaOr.setVisibility(View.INVISIBLE);
-                setaCarry.setVisibility(View.VISIBLE);
+
+
                 bitOutPut.setText(orOutput.getText());
                 bitOutPut.setBackgroundColor(bitOutPut.getText().equals("1")?
                         Color.CYAN:
                         Color.WHITE);
+                setaCarry.setVisibility(bitOutPut.getText().equals("1")?
+                        View.VISIBLE:
+                        View.INVISIBLE);
+                setaOr.setVisibility(!bitOutPut.getText().equals("1")?
+                        View.VISIBLE:
+                        View.INVISIBLE);
 
 
             }
