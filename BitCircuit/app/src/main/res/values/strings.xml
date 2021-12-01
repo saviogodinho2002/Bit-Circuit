@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Bit Circuit</string>
+    <string name="inicio">"Ultilize os botões abaixo"</string>
+    <string name="firstext">"O Circuito Completo de 1 bit realiza a soma de 2 números mais um carry que pode ou não estar vindo de outro somador. "</string>
 </resources>
