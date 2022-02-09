@@ -19,16 +19,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView xor_1Comparion, xor_2Comparion, and_1Comparion, and_2Comparion, orComparion;
-    private TextView xor_1Output, xor_2Output, and_1Output, and_2Output, orOutput, carryOutPut, bitOutPut;
+    private TextView xor_1Output, xor_2Output, and_1Output, and_2Output, orOutput, sumOutPut, carryOutPut;
     private TextView instrucions;
     private CheckBox chkCarry, chkBit_1, chkBit_2;
     private String bit_1, bit_2, carry;
     private int delay;
     private Button btnStart, btnNext, btnBefore,btnReset;
-    private ImageView setaXor_1, setaXor_2, setaAnd_1, setaAnd_2, setaOr, setaCarry, setaSoma;
+    private ImageView arrow_Xor_1, arrow_Xor_2, arrow_And_1, arrow_And_2, arrow_Or, arrow_Carry, arrow_Sum;
     private int indexStage;
     private Handler handler;
-    private List<String> descript;
+
+    private LogicGate andGate_1,andGate_2,orGate,xorGate_1,xorGate_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +54,36 @@ public class MainActivity extends AppCompatActivity {
         orComparion = findViewById(R.id.txt_or);
         orOutput = findViewById(R.id.txt_result_or);
 
-        carryOutPut = findViewById(R.id.txt_carry);
-        bitOutPut = findViewById(R.id.txt_bit);
+        sumOutPut = findViewById(R.id.txt_carry);
+        carryOutPut = findViewById(R.id.txt_bit);
 
         chkBit_1 = findViewById(R.id.check_a);
         chkBit_2 = findViewById(R.id.check_b);
         chkCarry = findViewById(R.id.check_carry_1);
 
-        setaAnd_1 = findViewById(R.id.img_seta_and_1);
-        setaAnd_2 = findViewById(R.id.img_seta_and_2);
-        setaXor_1 = findViewById(R.id.img_seta_xor_1);
-        setaXor_2 = findViewById(R.id.img_seta_xor_2);
-        setaOr = findViewById(R.id.img_seta_or);
-        setaCarry = findViewById(R.id.img_seta_carryout);
-        setaSoma = findViewById(R.id.img_seta_soma);
+        arrow_And_1 = findViewById(R.id.img_seta_and_1);
+        arrow_And_2 = findViewById(R.id.img_seta_and_2);
+        arrow_Xor_1 = findViewById(R.id.img_seta_xor_1);
+        arrow_Xor_2 = findViewById(R.id.img_seta_xor_2);
+        arrow_Or = findViewById(R.id.img_seta_or);
+        arrow_Carry = findViewById(R.id.img_seta_carryout);
+        arrow_Sum = findViewById(R.id.img_seta_soma);
+
+
+
         resetAll();
         bit_1 = "0";
         bit_2 = "0";
         carry = "0";
+
+        andGate_1 = new AndGate(bit_1,bit_2);
+        xorGate_1 = new XorGate(bit_1,bit_2);
+
+        andGate_2 = new AndGate(carry, xorGate_1.getDataExit());
+        xorGate_2 = new XorGate(carry, xorGate_1.getDataExit());
+
+        orGate = new OrGate(andGate_2.getDataExit(),andGate_1.getDataExit());
+
         indexStage = 0;
         delay = 0;
         handler = new Handler();
@@ -152,11 +165,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void resetAll() {
         indexStage = 0;
-        xor_1Comparion.setTextColor(Color.WHITE);
-        and_1Comparion.setTextColor(Color.WHITE);
-        xor_2Comparion.setTextColor(Color.WHITE);
-        and_2Comparion.setTextColor(Color.WHITE);
-        orComparion.setTextColor(Color.WHITE);
+        startStage(xor_1Comparion,xor_1Output, arrow_Xor_1);
+        startStage(xor_2Comparion,xor_2Output, arrow_Xor_2);
+
+        startStage(sumOutPut,arrow_Sum);
+        startStage(carryOutPut,arrow_Carry);
+
+        startStage(and_2Comparion,and_2Output, arrow_And_2);
+        startStage(and_1Comparion,and_1Output, arrow_And_1);
+        startStage(orComparion,orOutput, arrow_Or);
+
+        startStage(sumOutPut,arrow_Sum);
+        startStage(carryOutPut,arrow_Carry);
 
         xor_1Comparion.setText("0 xor 0");
         xor_2Comparion.setText("0 xor 0");
@@ -164,54 +184,6 @@ public class MainActivity extends AppCompatActivity {
         and_1Comparion.setText("0 and 0");
         orComparion.setText("0 or 0");
 
-        xor_2Output.setText("0");
-        xor_1Output.setText("0");
-        and_2Output.setText("0");
-        and_1Output.setText("0");
-        orOutput.setText("0");
-
-        xor_2Output.setTextColor(Color.WHITE);
-        xor_1Output.setTextColor(Color.WHITE);
-        and_2Output.setTextColor(Color.WHITE);
-        and_1Output.setTextColor(Color.WHITE);
-        orOutput.setTextColor(Color.WHITE);
-
-        xor_1Output.setBackgroundColor(Color.BLACK);
-        and_1Output.setBackgroundColor(Color.BLACK);
-        xor_2Output.setBackgroundColor(Color.BLACK);
-        and_2Output.setBackgroundColor(Color.BLACK);
-        orOutput.setBackgroundColor(Color.BLACK);
-
-        carryOutPut.setBackgroundColor(Color.WHITE);
-        bitOutPut.setBackgroundColor(Color.WHITE);
-
-        carryOutPut.setText("0");
-        bitOutPut.setText("0");
-
-        setaSoma.setVisibility(View.INVISIBLE);
-        setaCarry.setVisibility(View.INVISIBLE);
-        setaOr.setVisibility(View.INVISIBLE);
-        setaXor_1.setVisibility(View.INVISIBLE);
-        setaXor_2.setVisibility(View.INVISIBLE);
-        setaAnd_1.setVisibility(View.INVISIBLE);
-        setaAnd_2.setVisibility(View.INVISIBLE);
-        /*
-         int delay = 0;   // delay de 2 seg.
-        int interval = 1000;  // intervalo de 1 seg.
-
-            Timer timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask() {
-                public void run() {
-                    String texto =  binario;
-                    txtHistoric.setText(texto);
-                    timer.cancel();
-                    Log.e("teste",binario);
-                }
-            }, delay+=2000,0);
-            Log.e("teste",binario);
-        }
-        DELAYYY
-         */
 
     }
 
@@ -314,28 +286,61 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private void startStage(TextView txtComparation, TextView txtOutPut, ImageView imgArrow_1){
+       txtComparation.setTextColor(Color.WHITE);
+       txtOutPut.setTextColor(Color.WHITE);
+       txtOutPut.setBackgroundColor(Color.BLACK);
+       txtOutPut.setText("0");
+       imgArrow_1.setVisibility(View.INVISIBLE);
+    }
+    private void startStage( TextView txtOutPut, ImageView imgArrow_1){
+        txtOutPut.setTextColor(Color.BLACK);
+        txtOutPut.setBackgroundColor(Color.WHITE);
+        txtOutPut.setText("0");
+        imgArrow_1.setVisibility(View.INVISIBLE);
+    }
+    private void comparationStage(TextView txtComparation, TextView txtOutPut, ImageView imgArrow){
+        txtComparation.setTextColor(Color.YELLOW);
+        txtOutPut.setText("0");
+        txtOutPut.setTextColor(Color.WHITE);
+        txtOutPut.setBackgroundColor(Color.BLACK);
+        imgArrow.setVisibility(View.VISIBLE);
+    }
+
+    private void resultStage(TextView txtComparation, TextView txtOutPut, ImageView imgArrow,String outPutStage){
+        imgArrow.setVisibility(View.VISIBLE);
+        if(outPutStage.equals("1")){
+            txtComparation.setTextColor(Color.GREEN);
+            txtOutPut.setBackgroundColor(Color.CYAN);
+            txtOutPut.setText(outPutStage);
+            txtOutPut.setTextColor(Color.WHITE);
+        }else {
+            txtComparation.setTextColor(Color.RED);
+            txtOutPut.setBackgroundColor(Color.BLACK);
+            txtOutPut.setText(outPutStage);
+            txtOutPut.setTextColor(Color.WHITE);
+        }
+    }
+    private void resultStage( TextView txtOutPut, ImageView imgArrow,String outPutStage){
+        imgArrow.setVisibility(View.VISIBLE);
+        if(outPutStage.equals("1")){
+
+            txtOutPut.setBackgroundColor(Color.CYAN);
+            txtOutPut.setText(outPutStage);
+            txtOutPut.setTextColor(Color.WHITE);
+        }else {
+            txtOutPut.setBackgroundColor(Color.WHITE);
+            txtOutPut.setText(outPutStage);
+            txtOutPut.setTextColor(Color.BLACK);
+        }
+    }
 
     private void resetStageOne() {
-        //seria voltar para o  0
-
         xor_1Comparion.setText("0 xor 0");
         and_1Comparion.setText("0 and 0");
 
-        xor_1Output.setText("0");
-        and_1Output.setText("0");
-
-        setaXor_1.setVisibility(View.INVISIBLE);
-        setaAnd_1.setVisibility(View.INVISIBLE);
-
-        xor_1Output.setBackgroundColor(Color.BLACK);
-        and_1Output.setBackgroundColor(Color.BLACK);
-
-        xor_1Comparion.setTextColor(Color.WHITE);
-        and_1Comparion.setTextColor(Color.WHITE);
-
-
-        xor_1Output.setTextColor(Color.WHITE);
-        and_1Output.setTextColor(Color.WHITE);
+        startStage(xor_1Comparion,xor_1Output,arrow_Xor_1);
+        startStage(and_1Comparion,and_1Output,arrow_And_1);
 
     }
 
@@ -344,67 +349,30 @@ public class MainActivity extends AppCompatActivity {
 
         xor_1Comparion.setText(bit_1 + " xor " + bit_2);
         and_1Comparion.setText(bit_1 + " and " + bit_2);
-
-        xor_1Output.setText("0");
-        and_1Output.setText("0");
-
-        xor_1Output.setBackgroundColor(Color.BLACK);
-        and_1Output.setBackgroundColor(Color.BLACK);
-
-        xor_1Comparion.setTextColor(Color.YELLOW);
-        and_1Comparion.setTextColor(Color.YELLOW);
-
-        setaXor_1.setVisibility(View.VISIBLE);
-        setaAnd_1.setVisibility(View.VISIBLE);
-
-        xor_1Output.setTextColor(Color.WHITE);
-        and_1Output.setTextColor(Color.WHITE);
+        comparationStage(xor_1Comparion,xor_1Output,arrow_Xor_1);
+        comparationStage(and_1Comparion,and_1Output,arrow_And_1);
 
     }
 
     private void resetStageTwo() {
         stageOne();
-        xor_1Output.setBackgroundColor(Color.BLACK);
-        and_1Output.setBackgroundColor(Color.BLACK);
-        xor_1Output.setTextColor(Color.WHITE);
-        and_1Output.setTextColor(Color.WHITE);
-        xor_1Output.setText("0");
-        and_1Output.setText("0");
 
     }
 
     private void stageTwo() {
-        boolean finalBitOne = bit_1.equals(bit_2);
 
-        setaXor_1.setVisibility(View.VISIBLE);
-        setaAnd_1.setVisibility(View.VISIBLE);
+        xorGate_1 = new XorGate(bit_1,bit_2);
+        andGate_1 = new AndGate(bit_1,bit_2);
 
-        xor_1Comparion.setTextColor(!finalBitOne ?
-                Color.GREEN : Color.RED);
-        and_1Comparion.setTextColor(finalBitOne && bit_2.equals("1") ?
-                Color.GREEN : Color.RED);
+        resultStage(xor_1Comparion,xor_1Output,arrow_Xor_1,xorGate_1.getDataExit());
+        resultStage(and_1Comparion,and_1Output,arrow_And_1,andGate_1.getDataExit());
 
-        xor_1Output.setText((!finalBitOne) ? "1" : "0");
-        and_1Output.setText((finalBitOne && bit_2.equals("1")) ? "1" : "0");
-
-        xor_1Output.setTextColor((!finalBitOne) ? Color.BLACK : Color.WHITE);
-        and_1Output.setTextColor((finalBitOne && bit_2.equals("1")) ? Color.BLACK : Color.WHITE);
-
-        xor_1Output.setBackgroundColor(!finalBitOne ?
-                Color.CYAN :
-                Color.BLACK);
-        and_1Output.setBackgroundColor(finalBitOne && bit_2.equals("1") ?
-                Color.CYAN :
-                Color.BLACK);
     }
 
     private void resetStageThree() {
         stageTwo();
-        setaXor_2.setVisibility(View.INVISIBLE);
-        setaAnd_2.setVisibility(View.INVISIBLE);
-
-        xor_2Comparion.setTextColor(Color.WHITE);
-        and_2Comparion.setTextColor(Color.WHITE);
+        startStage(xor_2Comparion,xor_2Output,arrow_Xor_2);
+        startStage(and_2Comparion,and_2Output,arrow_And_2);
 
         xor_2Comparion.setText("0 xor 0");
         and_2Comparion.setText("0 and 0");
@@ -413,133 +381,78 @@ public class MainActivity extends AppCompatActivity {
 
     private void stageThree() {
 
-        setaXor_1.setVisibility(View.INVISIBLE);
-        setaAnd_1.setVisibility(View.INVISIBLE);
+        arrow_Xor_1.setVisibility(View.INVISIBLE);
+        arrow_And_1.setVisibility(View.INVISIBLE);
         xor_2Comparion.setText(carry + " xor " + xor_1Output.getText());
         and_2Comparion.setText(carry + " and " + xor_1Output.getText());
         //
-        xor_2Comparion.setTextColor(Color.YELLOW);
-        and_2Comparion.setTextColor(Color.YELLOW);
+        comparationStage(xor_2Comparion,xor_2Output,arrow_Xor_2);
+        comparationStage(and_2Comparion,and_2Output,arrow_And_2);
 
-        //
-        setaXor_2.setVisibility(View.VISIBLE);
-        setaAnd_2.setVisibility(View.VISIBLE);
 
     }
 
     private void resetStageFour() {
         stageThree();
-        xor_2Output.setBackgroundColor(Color.BLACK);
-        and_2Output.setBackgroundColor(Color.BLACK);
-
-        xor_2Output.setTextColor(Color.WHITE);
-        and_2Output.setTextColor(Color.WHITE);
-
-        xor_2Output.setText("0");
-        and_2Output.setText("0");
 
     }
 
     private void stageFour() {
-        boolean finalBitOne = carry.equals(xor_1Output.getText());
+        andGate_2 = new AndGate(carry,xorGate_1.getDataExit());
+        xorGate_2 = new XorGate(carry,xorGate_1.getDataExit());
 
-        setaXor_2.setVisibility(View.VISIBLE);
-        setaAnd_2.setVisibility(View.VISIBLE);
+        resultStage(xor_2Comparion,xor_2Output,arrow_Xor_2,xorGate_2.getDataExit());
+        resultStage(and_2Comparion,and_2Output,arrow_And_2,andGate_2.getDataExit());
 
-        xor_2Comparion.setTextColor(!finalBitOne ?
-                Color.GREEN : Color.RED);
-        and_2Comparion.setTextColor(finalBitOne && carry.equals("1") ?
-                Color.GREEN : Color.RED);
-        //
-        xor_2Output.setText((!finalBitOne) ? "1" : "0");
-        and_2Output.setText((finalBitOne && carry.equals("1")) ? "1" : "0");
-
-        xor_2Output.setTextColor((!finalBitOne) ? Color.BLACK : Color.WHITE);
-        and_2Output.setTextColor((finalBitOne && carry.equals("1")) ? Color.BLACK : Color.WHITE);
-
-        //
-        xor_2Output.setBackgroundColor(!finalBitOne ?
-                Color.CYAN :
-                Color.BLACK);
-        and_2Output.setBackgroundColor(finalBitOne && carry.equals("1") ?
-                Color.CYAN :
-                Color.BLACK);
     }
+
 
     private void resetStageFive() {
         stageFour();
-        carryOutPut.setText("0");
-        carryOutPut.setBackgroundColor(Color.WHITE);
+        startStage(orComparion,orOutput,arrow_Or);
+        startStage(sumOutPut,arrow_Sum);
+        Log.e("teste","resetando 7");
         orComparion.setText("0 or 0");
 
-        setaOr.setVisibility(View.INVISIBLE);
-        setaSoma.setVisibility(View.INVISIBLE);
-        orComparion.setTextColor(Color.WHITE);
     }
 
     private void stageFive() {
-        setaXor_2.setVisibility(View.INVISIBLE);
-        setaAnd_2.setVisibility(View.INVISIBLE);
+        arrow_Xor_2.setVisibility(View.INVISIBLE);
+        arrow_And_2.setVisibility(View.INVISIBLE);
 
-        carryOutPut.setText(xor_2Output.getText());
+
+        sumOutPut.setText(xorGate_2.getDataExit());
         orComparion.setText(and_2Output.getText() + " or " + and_1Output.getText());
 
-        orComparion.setTextColor(Color.YELLOW);
-        setaOr.setVisibility(View.VISIBLE);
-
-        carryOutPut.setBackgroundColor(carryOutPut.getText().equals("1") ?
-                Color.CYAN :
-                Color.WHITE);
-        setaSoma.setVisibility(
-                View.VISIBLE);
+        comparationStage(orComparion,orOutput,arrow_Or);
+        resultStage(sumOutPut,arrow_Sum,xorGate_2.getDataExit());
 
     }
 
     private void resetStageSix() {
         stageFive();
-        orOutput.setText("0");
-        orOutput.setTextColor(Color.WHITE);
-        orOutput.setBackgroundColor(Color.BLACK);
     }
 
     private void stageSix() {
 
         boolean finalBitOne = (and_2Output.getText().equals("1") || and_1Output.getText().equals("1"));
-        setaSoma.setVisibility(View.INVISIBLE);
-        orComparion.setTextColor(finalBitOne ?
-                Color.GREEN : Color.RED);
 
-        orOutput.setText(finalBitOne ? "1" : "0");
-        orOutput.setTextColor(finalBitOne ? Color.BLACK : Color.WHITE);
-        orOutput.setBackgroundColor(finalBitOne ?
-                Color.CYAN :
-                Color.BLACK);
+        orGate = new OrGate(andGate_2.getDataExit(),andGate_1.getDataExit());
+        resultStage(orComparion,orOutput,arrow_Or,orGate.getDataExit());
+
+        arrow_Sum.setVisibility(View.INVISIBLE);
+
     }
 
     private void resetStageSeven() {
         stageSix();
-        setaCarry.setVisibility(
-                View.INVISIBLE);
-        setaOr.setVisibility(
-                View.VISIBLE);
+        startStage(carryOutPut,arrow_Carry);
 
-        bitOutPut.setBackgroundColor(
-                Color.WHITE);
-        bitOutPut.setText("0");
     }
 
     private void stageSeven() {
+        resultStage(carryOutPut,arrow_Carry,orGate.getDataExit());
 
-        bitOutPut.setText(orOutput.getText());
-        bitOutPut.setBackgroundColor(bitOutPut.getText().equals("1") ?
-                Color.CYAN :
-                Color.WHITE);
-        setaCarry.setVisibility(
-                View.VISIBLE
-                );
-        setaOr.setVisibility(
-                View.INVISIBLE
-                );
     }
 
 }
